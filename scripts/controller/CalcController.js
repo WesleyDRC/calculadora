@@ -24,6 +24,20 @@ class CalcController {
         this.setShowLastNumberToDisplay()
     }
 
+    copyToClipBoard() {
+        let input = document.createElement('input')
+
+        input.value = this.displayCalc;
+
+        document.body.appendChild(input)
+
+        input.select();
+
+        document.execCommand('Copy');
+
+        input.remove()
+    }
+
     initKeyboard () {
         document.addEventListener('keyup',(e) => {
 
@@ -64,6 +78,12 @@ class CalcController {
                 case '9':
                     this.addOperation(parseInt(e.key))
                     break;
+
+                case 'c': 
+                    if(e.ctrlKey) {
+                        this.copyToClipBoard();
+                    }
+                break;
             }
         })
     }

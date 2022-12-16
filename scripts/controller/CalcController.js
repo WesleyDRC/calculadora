@@ -142,7 +142,7 @@ class CalcController {
     }
 
     isOperator(value) {
-        return (["+", "-", "*", "/", "% "].indexOf(value) > -1)
+        return (["+", "-", "*", "/", "%"].indexOf(value) > -1)
     }
 
     pushOperation(value) {
@@ -152,16 +152,18 @@ class CalcController {
 
         if(this._operation.length > 3) {
 
-            
             this.calc();
-            console.log(this._operation)
-            
+    
         }
        
     }
 
     getResult () {
-        return eval(this._operation.join(""))
+        try {
+            return eval(this._operation.join(""));
+        } catch (e) {
+            setTimeout(() => this.setError(), 1);
+        }
     }
 
     calc() {
@@ -181,10 +183,7 @@ class CalcController {
 
         } else if(this._operation.length === 3) {
             this._lastNumber = this.getLastItem(false);
-        }
-
-        console.log("operator " + this._lastOperator)
-        console.log("number " + this._lastNumber)
+        }   
 
         let result = this.getResult();
 
@@ -373,7 +372,7 @@ class CalcController {
     set displayCalc(valor) {
         if(valor.toString().length > 10) {
             this.setError();
-            return false;
+            return false
         }
         this._displayCalcEl.innerHTML = valor
     }
